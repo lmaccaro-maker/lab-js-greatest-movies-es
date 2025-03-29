@@ -1,19 +1,15 @@
 
 
 // Iteration 1: All directors? - Get the array of all directors.
+
 // _Bonus_: It seems some of the directors had directed multiple movies so they will pop up multiple times in the array of directors.
 // How could you "clean" a bit this array and make it unified (without duplicates)?
 
 // Step 1: Extract all director names
-
 const directorArray = movies.map(movies => movies.director);
-
 // Step 2: Remove duplicate director names
-
 const uniqueDirectors = [...new Set(directorArray)];
-
 // Log the unique directors
-
 console.log(uniqueDirectors);
 
 
@@ -49,22 +45,70 @@ console.log(scoresAverage(movies)); // This will output the average score-> 8.31
 
 // Iteration 4: Drama movies - Get the average of Drama Movies
 
+function scoresAverage(moviesArray) {
 
+  if (moviesArray.length === 0) return 0; // Handle empty array
 
+  // Sum all scores using reduce, default to 0 for undefined scores
+  const totalScore = moviesArray.reduce((accumulator, movie) => accumulator + (movie.score || 0), 0);
 
+  // Calculate average score
+  const averageScore = totalScore / moviesArray.length;
 
+  // Return average rounded to two decimal places
+  return parseFloat(averageScore.toFixed(2));
+}
+console.log(scoresAverage(movies));  //This will output the average score-> 8.31
 
 
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
-function orderByYear(moviesArray) { }
+
+function orderByYear(moviesArray) {
+
+  // Create a copy of the array to avoid mutating the original
+  const moviesCopy = [...moviesArray];
+
+  // Sort the movies first by year, then by title if the years are the same
+
+  moviesCopy.sort((a, b) => {
+    if (a.year !== b.year) {
+      return a.year - b.year; // Sort by year
+    } else {
+      return a.title.localeCompare(b.title); // Sort alphabetically by title if years are the same
+    }
+  });
+
+  return moviesCopy; // Return the sorted array 
+}
+
+console.log(orderByYear(movies));  //ordered by year
+
 
 // Iteration 6: Alphabetic Order - Order by title and print the first 20 titles
-function orderAlphabetically(moviesArray) { }
+
+function orderAlphabetically(moviesArray) {
+
+  // Create a new array with just the titles
+  const titlesArray = moviesArray.map(movie => movie.title);
+
+  // Sort the titles alphabetically
+  titlesArray.sort((a, b) => a.localeCompare(b));
+
+  // Return the first 20 titles, or all of them if there are less than 20
+  return titlesArray.slice(0, 20);
+
+}
+
+console.log(orderAlphabetically(movies));
+// This will output the first 20 movie titles in alphabetical order
+
 
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
+
 function turnHoursToMinutes(moviesArray) { }
 
 // BONUS - Iteration 8: Best yearly score average - Best yearly score average
+
 function bestYearAvg(moviesArray) { }
 
 
