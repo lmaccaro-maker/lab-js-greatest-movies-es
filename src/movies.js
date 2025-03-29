@@ -99,22 +99,80 @@ function orderAlphabetically(moviesArray) {
 
 }
 
-console.log(orderAlphabetically(movies));
-// This will output the first 20 movie titles in alphabetical order
+console.log(orderAlphabetically(movies)); // This will output the first 20 movie titles in alphabetical order
 
 
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
 
-function turnHoursToMinutes(moviesArray) { }
+function turnHoursToMinutes(moviesArray) 
+
+{
+  return moviesArray.map(movie => {
+    let duration = movie.duration; // Get the movie duration
+    let hours = 0; 
+    let minutes = 0;
+    
+    // Extract hours and minutes
+    let hourMatch = duration.match(/(\d+)h/); // Match pattern for hours
+    let minuteMatch = duration.match(/(\d+)min/); // Match pattern for minutes
+
+    if (hourMatch) hours = parseInt(hourMatch[1]); // Convert hours to integer
+    if (minuteMatch) minutes = parseInt(minuteMatch[1]); // Convert minutes to integer
+
+    // Calculate total minutes
+    let totalMinutes = (hours * 60) + minutes;
+
+    // Return new movie object with updated duration
+    return {
+      ...movie,
+      duration: totalMinutes
+    };
+  });
+}
+
+const updatedMovies = turnHoursToMinutes(movies);
+console.log(updatedMovies); // Each movie's duration will now be in total minutes
 
 // BONUS - Iteration 8: Best yearly score average - Best yearly score average
 
 function bestYearAvg(moviesArray) { }
 
+function bestYearAvg(moviesArray) {
+  if (moviesArray.length === 0) return null; // Handle the empty array case
 
+  const scoresByYear = {};
+
+  // Organize movies by year
+  moviesArray.forEach(movie => {
+    if (!scoresByYear[movie.year]) {
+      scoresByYear[movie.year] = [];
+    }
+    scoresByYear[movie.year].push(movie.score);
+  });
+
+  let bestYear = null;
+  let bestAverage = 0;
+
+  // Calculate averages and find the best year
+  
+  for (const year in scoresByYear) {
+    const scores = scoresByYear[year];
+    const average = scores.reduce((acc, score) => acc + score, 0) / scores.length;
+
+    if (average > bestAverage || (average === bestAverage && (!bestYear || year < bestYear))) {
+      bestAverage = average;
+      bestYear = year;
+    }
+  }
+
+  return `The best year was ${bestYear} with an average score of ${bestAverage.toFixed(2)}`;
+}
+
+console.log(bestYearAvg(movies));  //result: The best year was 1972 with an average score of 9.20
 
 // The following is required to make unit tests work.
 /* Environment setup. Do not modify the below code. */
+
 if (typeof module !== 'undefined') {
   module.exports = {
     getAllDirectors,
