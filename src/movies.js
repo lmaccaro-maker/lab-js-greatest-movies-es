@@ -7,9 +7,10 @@
 
 // Step 1: Extract all director names
 const directorArray = movies.map(movies => movies.director);
+
 // Step 2: Remove duplicate director names
 const uniqueDirectors = [...new Set(directorArray)];
-// Log the unique directors
+
 console.log(uniqueDirectors);
 
 
@@ -28,15 +29,12 @@ console.log(howManyMovies(movies));  //result: 7
 // Iteration 3: All scores average - Get the average of all scores with 2 decimals
 
 function scoresAverage(moviesArray) {
-  if (moviesArray.length === 0) return 0; // Handle empty array
+  if (moviesArray.length === 0) return 0; 
 
-  // Sum all scores using reduce, default to 0 for undefined scores
   const totalScore = moviesArray.reduce((accumulator, movie) => accumulator + (movie.score || 0), 0);
 
-  // Calculate average score
   const averageScore = totalScore / moviesArray.length;
 
-  // Return average rounded to two decimal places
   return parseFloat(averageScore.toFixed(2));
 }
 
@@ -47,15 +45,14 @@ console.log(scoresAverage(movies)); // This will output the average score-> 8.31
 
 function scoresAverage(moviesArray) {
 
-  if (moviesArray.length === 0) return 0; // Handle empty array
+  if (moviesArray.length === 0) return 0; 
 
-  // Sum all scores using reduce, default to 0 for undefined scores
+  
   const totalScore = moviesArray.reduce((accumulator, movie) => accumulator + (movie.score || 0), 0);
 
-  // Calculate average score
   const averageScore = totalScore / moviesArray.length;
 
-  // Return average rounded to two decimal places
+ 
   return parseFloat(averageScore.toFixed(2));
 }
 console.log(scoresAverage(movies));  //This will output the average score-> 8.31
@@ -96,7 +93,6 @@ function orderAlphabetically(moviesArray) {
 
   // Return the first 20 titles, or all of them if there are less than 20
   return titlesArray.slice(0, 20);
-
 }
 
 console.log(orderAlphabetically(movies)); // This will output the first 20 movie titles in alphabetical order
@@ -104,25 +100,22 @@ console.log(orderAlphabetically(movies)); // This will output the first 20 movie
 
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
 
-function turnHoursToMinutes(moviesArray) 
-
-{
+function turnHoursToMinutes(moviesArray) {
   return moviesArray.map(movie => {
-    let duration = movie.duration; // Get the movie duration
-    let hours = 0; 
+    let duration = movie.duration; 
+    let hours = 0;
     let minutes = 0;
-    
+
     // Extract hours and minutes
-    let hourMatch = duration.match(/(\d+)h/); // Match pattern for hours
-    let minuteMatch = duration.match(/(\d+)min/); // Match pattern for minutes
+    let hourMatch = duration.match(/(\d+)h/); 
+    let minuteMatch = duration.match(/(\d+)min/); 
 
-    if (hourMatch) hours = parseInt(hourMatch[1]); // Convert hours to integer
-    if (minuteMatch) minutes = parseInt(minuteMatch[1]); // Convert minutes to integer
+    if (hourMatch) hours = parseInt(hourMatch[1]); 
+    if (minuteMatch) minutes = parseInt(minuteMatch[1]); 
 
-    // Calculate total minutes
     let totalMinutes = (hours * 60) + minutes;
 
-    // Return new movie object with updated duration
+  
     return {
       ...movie,
       duration: totalMinutes
@@ -131,18 +124,18 @@ function turnHoursToMinutes(moviesArray)
 }
 
 const updatedMovies = turnHoursToMinutes(movies);
-console.log(updatedMovies); // Each movie's duration will now be in total minutes
+
+console.log(updatedMovies); // Each movie's duration will now be in total minutes.
+
 
 // BONUS - Iteration 8: Best yearly score average - Best yearly score average
 
-function bestYearAvg(moviesArray) { }
-
 function bestYearAvg(moviesArray) {
-  if (moviesArray.length === 0) return null; // Handle the empty array case
+  if (moviesArray.length === 0) return null; 
 
   const scoresByYear = {};
 
-  // Organize movies by year
+
   moviesArray.forEach(movie => {
     if (!scoresByYear[movie.year]) {
       scoresByYear[movie.year] = [];
@@ -154,7 +147,7 @@ function bestYearAvg(moviesArray) {
   let bestAverage = 0;
 
   // Calculate averages and find the best year
-  
+
   for (const year in scoresByYear) {
     const scores = scoresByYear[year];
     const average = scores.reduce((acc, score) => acc + score, 0) / scores.length;
@@ -169,6 +162,8 @@ function bestYearAvg(moviesArray) {
 }
 
 console.log(bestYearAvg(movies));  //result: The best year was 1972 with an average score of 9.20
+
+
 
 // The following is required to make unit tests work.
 /* Environment setup. Do not modify the below code. */
