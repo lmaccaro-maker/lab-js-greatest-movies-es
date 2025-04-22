@@ -29,7 +29,7 @@ console.log(howManyMovies(movies));  //result: 7
 // Iteration 3: All scores average - Get the average of all scores with 2 decimals
 
 function scoresAverage(moviesArray) {
-  if (moviesArray.length === 0) return 0; 
+  if (moviesArray.length === 0) return 0;
 
   const totalScore = moviesArray.reduce((accumulator, movie) => accumulator + (movie.score || 0), 0);
 
@@ -43,19 +43,28 @@ console.log(scoresAverage(movies)); // This will output the average score-> 8.31
 
 // Iteration 4: Drama movies - Get the average of Drama Movies
 
-function scoresAverage(moviesArray) {
+function dramaMoviesScore(movies) {
 
-  if (moviesArray.length === 0) return 0; 
+  const dramaMovies = movies.filter(movie => movie.genre.includes('Drama'));
 
-  
-  const totalScore = moviesArray.reduce((accumulator, movie) => accumulator + (movie.score || 0), 0);
+  if (dramaMovies.length === 0) return 0;
 
-  const averageScore = totalScore / moviesArray.length;
+  const totalScore = dramaMovies.reduce((sum, movie) => {
+    if (movie.score !== undefined) {
+      return sum + movie.score;
+    }
+    return sum;
+  }, 0);
 
- 
-  return parseFloat(averageScore.toFixed(2));
+  // Calcular el puntaje promedio
+  const averageScore = totalScore / dramaMovies.length;
+
+  // Devolver el promedio redondeado a dos decimales
+  return Number(averageScore.toFixed(2));
 }
-console.log(scoresAverage(movies));  //This will output the average score-> 8.31
+
+
+console.log(dramaMoviesScore(movies));
 
 
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
@@ -102,20 +111,20 @@ console.log(orderAlphabetically(movies)); // This will output the first 20 movie
 
 function turnHoursToMinutes(moviesArray) {
   return moviesArray.map(movie => {
-    let duration = movie.duration; 
+    let duration = movie.duration;
     let hours = 0;
     let minutes = 0;
 
     // Extract hours and minutes
-    let hourMatch = duration.match(/(\d+)h/); 
-    let minuteMatch = duration.match(/(\d+)min/); 
+    let hourMatch = duration.match(/(\d+)h/);
+    let minuteMatch = duration.match(/(\d+)min/);
 
-    if (hourMatch) hours = parseInt(hourMatch[1]); 
-    if (minuteMatch) minutes = parseInt(minuteMatch[1]); 
+    if (hourMatch) hours = parseInt(hourMatch[1]);
+    if (minuteMatch) minutes = parseInt(minuteMatch[1]);
 
     let totalMinutes = (hours * 60) + minutes;
 
-  
+
     return {
       ...movie,
       duration: totalMinutes
@@ -131,7 +140,7 @@ console.log(updatedMovies); // Each movie's duration will now be in total minute
 // BONUS - Iteration 8: Best yearly score average - Best yearly score average
 
 function bestYearAvg(moviesArray) {
-  if (moviesArray.length === 0) return null; 
+  if (moviesArray.length === 0) return null;
 
   const scoresByYear = {};
 
